@@ -683,11 +683,11 @@ if(devicePixelRatio >= 2){
 
             function getCssRules(styleSheets) {
                 var cssRules = [];
+                var anchor = document.createElement('a');
                 styleSheets.forEach(function (sheet) {
-                    try {
+                    anchor.href = sheet.href;
+                    if (anchor.hostname === window.location.hostname) {
                         util.asArray(sheet.cssRules || []).forEach(cssRules.push.bind(cssRules));
-                    } catch (e) {
-                        console.log('Error while reading CSS rules from ' + sheet.href, e.toString());
                     }
                 });
                 return cssRules;
