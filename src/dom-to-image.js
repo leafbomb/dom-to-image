@@ -164,11 +164,17 @@
             canvas.width = options.width || util.width(domNode);
             canvas.height = options.height || util.height(domNode);
 
-            if (options.bgcolor) {
                 var ctx = canvas.getContext('2d');
+if(devicePixelRatio >= 2){        
+    canvas.width *= 2;
+    canvas.height *= 2;
+    ctx.setTransform(2,0,0,2,0,0);
+}
+            if (options.bgcolor) {
                 ctx.fillStyle = options.bgcolor;
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
             }
+            ctx.imageSmoothingEnabled = false;
 
             return canvas;
         }
