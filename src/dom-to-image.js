@@ -682,16 +682,17 @@ if(devicePixelRatio >= 2){
             }
 
             function getCssRules(styleSheets) {
-                var cssRules = [];
-                var anchor = document.createElement('a');
-                styleSheets.forEach(function (sheet) {
-                    anchor.href = sheet.href;
-                    if (anchor.hostname === window.location.hostname) {
+                 var cssRules = [];
+                 styleSheets.forEach(function (sheet) {
+                    util.asArray(sheet.cssRules || []).forEach(cssRules.push.bind(cssRules));
+                    try {
                         util.asArray(sheet.cssRules || []).forEach(cssRules.push.bind(cssRules));
+                    } catch (e) {
+                        console.log('Error while reading CSS rules from ' + sheet.href, e.toString());
                     }
-                });
-                return cssRules;
-            }
+                 });
+                 return cssRules;
+             }
 
             function newWebFont(webFontRule) {
                 return {
